@@ -49,7 +49,7 @@ from logsense.metrics import measure_duration, setup_metrics
 from os import getenv
 
 customer_token = getenv('LOGSENSE_CUSTOMER_TOKEN')
-setup_metrics(customer_token)
+setup_metrics('myapp', customer_token)
 
 
 class MyComplexProcess:
@@ -63,3 +63,7 @@ class MyComplexProcess:
             x = x+1
         return x
 ```
+
+## Examples
+
+Check the [example](example/) for actual usage examples

@@ -9,6 +9,7 @@ class LogSenseRecordFormatter(l_handler.FluentRecordFormatter, object):
 class LogSenseHandler(l_handler.FluentHandler):
     def __init__(self,
                  customer_token,
+                 assign_default_formatter=True,
                  logsense_host=None,
                  logsense_port=None,
                  timeout=3.0,
@@ -22,6 +23,9 @@ class LogSenseHandler(l_handler.FluentHandler):
         self._logsense_host = logsense_host
         self._logsense_port = logsense_port
 
+        if assign_default_formatter:
+            self.setDefaultFormatter()
+
         l_handler.FluentHandler.__init__(self,
                                        'python',
                                        host=self._logsense_host,
@@ -33,6 +37,16 @@ class LogSenseHandler(l_handler.FluentHandler):
                                        buffer_overflow_handler=buffer_overflow_handler,
                                        msgpack_kwargs=msgpack_kwargs,
                                        nanosecond_precision=nanosecond_precision)
+
+    def setDefaultFormatter(self):
+        _custom_format = {
+            'host': '%(hostname)s',
+            'where': '%(module)s.%(funcName)s',
+            'type': '%(levelname)s',
+            'stack_trace': '%(exc_text)s'
+        }
+        _formatter = LogSenseRecordFormatter(_custom_format)
+        self.setFormatter(_formatter)
 
     def getSenderClass(self):
         return sender.LogSenseSender

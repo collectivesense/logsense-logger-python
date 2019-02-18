@@ -16,10 +16,11 @@ class FluentWrapper:
     def __init__(self):
         self._internal_logger = logging.getLogger('logsense.fluent-wrapper')
         self._logsense_customer_token = None
-        self._app = path.basename(__file__)
         self._logger = None
+        self._app = ''
 
-    def setup(self, customer_token, verbose=False, meta={}):
+    def setup(self, app, customer_token, verbose=False, meta={}):
+        self._app = app
         self._logsense_customer_token = customer_token
 
         if self._logsense_customer_token:
@@ -46,8 +47,8 @@ class FluentWrapper:
 fluent_wrapper = FluentWrapper()
 
 
-def setup_metrics(customer_token: str, metadata={}):
-    fluent_wrapper.setup(customer_token, meta=metadata)
+def setup_metrics(app: str, customer_token: str, metadata={}):
+    fluent_wrapper.setup(app, customer_token, meta=metadata)
 
 
 def _fix_special_keys(key:str):
