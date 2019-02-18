@@ -1,4 +1,4 @@
-from logsensefluent import sender as l_sender
+from fluent.sender import FluentSender
 from os import getenv
 import logging
 import socket
@@ -31,12 +31,12 @@ class LogSenseSender:
             internal_logger.warning("LOGSENSE_CUSTOMER_TOKEN not set - skipping handler")
         else:
             self._verbose = verbose
-            self._logger = l_sender.FluentSender(tag,
-                                              host=self._logsense_host,
-                                              ssl_server_hostname=self._logsense_host,
-                                              port=self._logsense_port,
-                                              use_ssl=True,
-                                              verbose=self._verbose)
+            self._logger = FluentSender(tag,
+                                        host=self._logsense_host,
+                                        ssl_server_hostname=self._logsense_host,
+                                        port=self._logsense_port,
+                                        use_ssl=True,
+                                        verbose=self._verbose)
 
             self._base_dict = self.update_meta(meta)
 

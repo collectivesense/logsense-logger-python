@@ -1,1 +1,2 @@
 flask
+git+https://github.com/collectivesense/logsense-logger-python#egg=logsense-logger

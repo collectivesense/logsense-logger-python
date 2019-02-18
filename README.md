@@ -5,6 +5,13 @@ with Python and [LogSense](https://logsense.com)
 
 # Usage
 
+## Installation
+
+```
+pip3 install -e git+https://github.com/collectivesense/logsense-logger-python#egg=logsense-logger
+```
+
+
 ## Wrapping logging
 
 ```

@@ -1,12 +1,13 @@
-from logsensefluent import handler as l_handler, sender as l_sender
-from logsense import sender
+from fluent.handler import FluentHandler, FluentRecordFormatter
+from fluent.sender import FluentSender
+from logsense.sender import LogSenseSender
 
 
-class LogSenseRecordFormatter(l_handler.FluentRecordFormatter, object):
+class LogSenseRecordFormatter(FluentRecordFormatter, object):
     pass
 
 
-class LogSenseHandler(l_handler.FluentHandler):
+class LogSenseHandler(FluentHandler):
     def __init__(self,
                  customer_token,
                  assign_default_formatter=True,
@@ -22,21 +23,22 @@ class LogSenseHandler(l_handler.FluentHandler):
         self._customer_token = customer_token
         self._logsense_host = logsense_host
         self._logsense_port = logsense_port
+        self._sender = None
 
         if assign_default_formatter:
             self.setDefaultFormatter()
 
-        l_handler.FluentHandler.__init__(self,
-                                       'python',
-                                       host=self._logsense_host,
-                                       ssl_server_hostname=self._logsense_host,
-                                       port=self._logsense_port,
-                                       use_ssl=True,
-                                       timeout=timeout,
-                                       verbose=verbose,
-                                       buffer_overflow_handler=buffer_overflow_handler,
-                                       msgpack_kwargs=msgpack_kwargs,
-                                       nanosecond_precision=nanosecond_precision)
+        FluentHandler.__init__(self,
+                               'python',
+                               host=self._logsense_host,
+                               ssl_server_hostname=self._logsense_host,
+                               port=self._logsense_port,
+                               use_ssl=True,
+                               timeout=timeout,
+                               verbose=verbose,
+                               buffer_overflow_handler=buffer_overflow_handler,
+                               msgpack_kwargs=msgpack_kwargs,
+                               nanosecond_precision=nanosecond_precision)
 
     def setDefaultFormatter(self):
         _custom_format = {
@@ -49,14 +51,14 @@ class LogSenseHandler(l_handler.FluentHandler):
         self.setFormatter(_formatter)
 
     def getSenderClass(self):
-        return sender.LogSenseSender
+        return LogSenseSender
 
     @property
     def sender(self):
         if self._sender is None:
-            self._sender = sender.LogSenseSender(customer_token=self._customer_token,
-                                               tag='python',
-                                               meta={},
-                                               logsense_host=self._logsense_host,
-                                               logsense_port=self._logsense_port)
+            self._sender = LogSenseSender(customer_token=self._customer_token,
+                                          tag='python',
+                                          meta={},
+                                          logsense_host=self._logsense_host,
+                                          logsense_port=self._logsense_port)
         return self._sender
