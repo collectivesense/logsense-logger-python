@@ -50,9 +50,25 @@ class LogSenseSender:
         }}
         return self._base_dict
 
+    def _convert_value_to_known_type(self, value):
+        if isinstance(value, str):
+            return value
+        elif isinstance(value, int):
+            return value
+        elif isinstance(value, float):
+            return value
+        elif isinstance(value, dict):
+            return value
+        elif isinstance(value, list):
+            return value
+        else:
+            # This fixes issues with e.g. NumPy serialization
+            return str(value)
+
     def emit(self, data={}):
         if self._logger:
-            self._logger.emit('tag', {**data, **self._base_dict})
+            converted_data = {key: self._convert_value_to_known_type(value) for key, value in data.items()}
+            self._logger.emit('tag', {**converted_data, **self._base_dict})
 
     def emit_with_time(self, label, timestamp, data):
         if self._logger:
