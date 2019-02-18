@@ -18,8 +18,10 @@ setup(
     package_dir={'logsense': 'logsense'},
     packages=['logsense'],
     install_requires=['msgpack', 'logsense-fluent-logger'],
+    dependency_links=['https://github.com/collectivesense/fluent-logger-python/tarball/master#egg=logsense-fluent-logger'],
     url='https://github.com/collectivesense/logsense-logger-python',
     download_url='http://pypi.python.org/pypi/logsense-logger/',
+    include_package_data=True,
     license='Apache License, Version 2.0',
     classifiers=[
         'Programming Language :: Python :: 2',
