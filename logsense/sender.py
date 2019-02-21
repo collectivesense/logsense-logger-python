@@ -28,7 +28,8 @@ class LogSenseSender:
 
         if self._customer_token is None:
             self._logger = None
-            internal_logger.warning("LOGSENSE_CUSTOMER_TOKEN not set - skipping handler")
+            # internal_logger.warning("LOGSENSE_CUSTOMER_TOKEN not set - skipping handler")
+            print("LOGSENSE_CUSTOMER_TOKEN not set - skipping handler")
         else:
             self._verbose = verbose
             self._logger = FluentSender(tag,
@@ -83,14 +84,20 @@ class LogSenseSender:
 
     @property
     def last_error(self):
-        return self._logger.last_error()
+        if self._logger:
+            return self._logger.last_error()
+        else:
+            return None
 
     @last_error.setter
     def last_error(self, err):
-        self._logger.last_error(err)
+        if self._logger:
+            self._logger.last_error(err)
 
     def clear_last_error(self, _thread_id=None):
-        self._logger.clear_last_error(_thread_id)
+        if self._logger:
+            self._logger.clear_last_error(_thread_id)
 
     def close(self):
-        self._logger.close()
+        if self._logger:
+            self._logger.close()

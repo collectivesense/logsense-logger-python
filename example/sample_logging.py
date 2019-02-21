@@ -23,7 +23,7 @@ class Example:
         self.bar = 42
 
     def foo(self):
-        logging.info("Answer: {}".format(self.bar))
+        logging.info("Answer: %d", 42)
 
 
 if __name__ == "__main__":
