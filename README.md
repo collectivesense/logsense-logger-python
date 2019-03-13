@@ -19,8 +19,8 @@ from logsense.handler import LogSenseHandler
 from os import getenv
 import logging
 
-customer_token = getenv('LOGSENSE_CUSTOMER_TOKEN', None)
-logging.getLogger().addHandler(LogSenseHandler(customer_token))
+logsense_token = getenv('LOGSENSE_TOKEN', None)
+logging.getLogger().addHandler(LogSenseHandler(logsense_token))
 
 
 class Example:
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 Now, just run the app, e.g.
 
 ```
-LOGSENSE_CUSTOMER_TOKEN="63da4903-01e9-d1a4-82a8-9cf8cd63b7b5" python sample_logging.py
+LOGSENSE_TOKEN="63da4903-01e9-d1a4-82a8-9cf8cd63b7b5" python sample_logging.py
 ```
 
 And your logs should flow to LogSense
@@ -48,15 +48,15 @@ And your logs should flow to LogSense
 
 The package also includes a simple example on how to measure method duration
 and have ability to track metrics. All that needs to be done is providing
-`LOGSENSE_CUSTOMER_TOKEN` environment variable and than annotating
+`LOGSENSE_TOKEN` environment variable and than annotating
 methods that are to be measure with `@measure_duration()`. For example:
 
 ```
 from logsense.metrics import measure_duration, setup_metrics
 from os import getenv
 
-customer_token = getenv('LOGSENSE_CUSTOMER_TOKEN')
-setup_metrics('myapp', customer_token)
+logsense_token = getenv('LOGSENSE_TOKEN')
+setup_metrics('myapp', logsense_token)
 
 
 class MyComplexProcess:
