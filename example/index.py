@@ -6,13 +6,13 @@ import logging
 
 # Fetch token
 from os import getenv
-customer_token = getenv('LOGSENSE_CUSTOMER_TOKEN')
+logsense_token = getenv('LOGSENSE_TOKEN')
 
 # Setup metrics
-setup_metrics('index.py', customer_token)
+setup_metrics('index.py', logsense_token)
 
 # Setup logging
-_handler = LogSenseHandler(customer_token)
+_handler = LogSenseHandler(logsense_token)
 _handler.setLevel(logging.INFO)
 logging.getLogger().addHandler(_handler)
 

@@ -15,24 +15,24 @@ class FluentWrapper:
 
     def __init__(self):
         self._internal_logger = logging.getLogger('logsense.fluent-wrapper')
-        self._logsense_customer_token = None
+        self._logsense_token = None
         self._logger = None
         self._app = ''
 
-    def setup(self, app, customer_token, verbose=False, meta={}):
+    def setup(self, app, logsense_token, verbose=False, meta={}):
         self._app = app
-        self._logsense_customer_token = customer_token
+        self._logsense_token = logsense_token
 
-        if self._logsense_customer_token:
+        if self._logsense_token:
             self._internal_logger.info("Initializing LogSense metrics wrapper")
-            self._logger = LogSenseSender(self._logsense_customer_token,
+            self._logger = LogSenseSender(self._logsense_token,
                                          'metrics',
                                          verbose=verbose,
                                          meta=self._build_meta(meta))
         else:
             self._logger = None
             self._internal_logger.warning("LogSense metrics wrapper initialization skipped, "
-                                         "LOGSENSE_CUSTOMER_TOKEN is not set")
+                                         "LOGSENSE_TOKEN is not set")
 
     def emit(self, label: str, value: float, optional=dict()):
         if self._logger is None:
@@ -47,8 +47,8 @@ class FluentWrapper:
 fluent_wrapper = FluentWrapper()
 
 
-def setup_metrics(app: str, customer_token: str, metadata={}):
-    fluent_wrapper.setup(app, customer_token, meta=metadata)
+def setup_metrics(app: str, logsense_token: str, metadata={}):
+    fluent_wrapper.setup(app, logsense_token, meta=metadata)
 
 
 def _fix_special_keys(key:str):

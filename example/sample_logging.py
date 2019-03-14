@@ -4,9 +4,9 @@ from logsense.handler import LogSenseHandler, LogSenseRecordFormatter
 from os import getenv
 import logging
 
-_customer_token = getenv('LOGSENSE_CUSTOMER_TOKEN', None)
+_logsense_token = getenv('LOGSENSE_TOKEN', None)
 
-_handler = LogSenseHandler(_customer_token)
+_handler = LogSenseHandler(_logsense_token)
 _handler.setLevel(logging.INFO)
 logging.getLogger().addHandler(_handler)
 

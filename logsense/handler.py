@@ -9,7 +9,7 @@ class LogSenseRecordFormatter(FluentRecordFormatter, object):
 
 class LogSenseHandler(FluentHandler):
     def __init__(self,
-                 customer_token,
+                 logsense_token,
                  assign_default_formatter=True,
                  logsense_host=None,
                  logsense_port=None,
@@ -20,7 +20,7 @@ class LogSenseHandler(FluentHandler):
                  nanosecond_precision=False,
                  **kwargs):
 
-        self._customer_token = customer_token
+        self._logsense_token = logsense_token
         self._logsense_host = logsense_host
         self._logsense_port = logsense_port
         self._sender = None
@@ -56,7 +56,7 @@ class LogSenseHandler(FluentHandler):
     @property
     def sender(self):
         if self._sender is None:
-            self._sender = LogSenseSender(customer_token=self._customer_token,
+            self._sender = LogSenseSender(logsense_token=self._logsense_token,
                                           tag='python',
                                           meta={},
                                           logsense_host=self._logsense_host,

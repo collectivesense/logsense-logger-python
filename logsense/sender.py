@@ -6,7 +6,7 @@ import socket
 
 class LogSenseSender:
     def __init__(self,
-                 customer_token=None,
+                 logsense_token=None,
                  tag='python',
                  meta={},
                  logsense_host=None,
@@ -14,7 +14,7 @@ class LogSenseSender:
                  verbose=False,
                  nanosecond_precision = False):
         internal_logger = logging.getLogger('logsense.sender')
-        self._customer_token = customer_token
+        self._logsense_token = logsense_token
 
         if logsense_host:
             self._logsense_host = logsense_host
@@ -26,10 +26,9 @@ class LogSenseSender:
         else:
             self._logsense_port = int(getenv('LOGSENSE_PORT', '32714'))
 
-        if self._customer_token is None:
+        if self._logsense_token is None:
             self._logger = None
-            # internal_logger.warning("LOGSENSE_CUSTOMER_TOKEN not set - skipping handler")
-            print("LOGSENSE_CUSTOMER_TOKEN not set - skipping handler")
+            print("LOGSENSE_TOKEN not set - skipping handler")
         else:
             self._verbose = verbose
             self._logger = FluentSender(tag,
@@ -45,7 +44,7 @@ class LogSenseSender:
 
     def update_meta(self, new_meta):
         self._base_dict = {**new_meta, **{
-            'cs_customer_token': self._customer_token,
+            'cs_customer_token': self._logsense_token,
             'cs_hostname': socket.gethostname(),
             'cs_pattern_key': 'message'
         }}
