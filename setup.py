@@ -12,7 +12,7 @@ desc = 'A Python logging handler for sending logs to LogSense'
 
 setup(
     name='logsense-logger',
-    version='0.0.1',
+    version='0.0.2',
     description=desc,
     long_description=open(README).read(),
     long_description_content_type='text/markdown',
