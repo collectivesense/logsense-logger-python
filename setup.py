@@ -15,6 +15,7 @@ setup(
     version='0.0.1',
     description=desc,
     long_description=open(README).read(),
+    long_description_content_type='text/markdown',
     package_dir={'logsense': 'logsense'},
     packages=['logsense'],
     install_requires=['msgpack', 'mona-fluent-logger'],
