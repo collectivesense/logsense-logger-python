@@ -8,7 +8,7 @@ with Python and [LogSense](https://logsense.com)
 ## Installation
 
 ```
-pip3 install -e git+https://github.com/collectivesense/logsense-logger-python#egg=logsense-logger
+pip3 install logsense-logger
 ```
 
 
