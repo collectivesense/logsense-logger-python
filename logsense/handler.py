@@ -1,6 +1,6 @@
 from fluent.handler import FluentHandler, FluentRecordFormatter
-from fluent.sender import FluentSender
 from logsense.sender import LogSenseSender
+import logging
 
 
 class LogSenseRecordFormatter(FluentRecordFormatter, object):
@@ -18,12 +18,15 @@ class LogSenseHandler(FluentHandler):
                  buffer_overflow_handler=None,
                  msgpack_kwargs=None,
                  nanosecond_precision=False,
+                 level=logging.DEBUG,
                  **kwargs):
 
         self._logsense_token = logsense_token
         self._logsense_host = logsense_host
         self._logsense_port = logsense_port
         self._sender = None
+
+        self.setLevel(level)
 
         if assign_default_formatter:
             self.setDefaultFormatter()

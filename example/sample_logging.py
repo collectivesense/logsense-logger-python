@@ -6,16 +6,14 @@ import logging
 
 _logsense_token = getenv('LOGSENSE_TOKEN', None)
 
-_handler = LogSenseHandler(_logsense_token)
-_handler.setLevel(logging.INFO)
-logging.getLogger().addHandler(_handler)
+log = logging.getLogger()
+log.addHandler(LogSenseHandler(_logsense_token))
+log.setLevel(logging.INFO)
 
 _console = logging.StreamHandler()
 _console.setLevel(logging.DEBUG)
 _console.setFormatter(logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s'))
-logging.getLogger().addHandler(_console)
-
-logging.getLogger().setLevel(logging.INFO)
+log.addHandler(_console)
 
 
 class Example:
