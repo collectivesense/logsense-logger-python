@@ -45,8 +45,7 @@ class LogSenseSender:
     def update_meta(self, new_meta):
         self._base_dict = {**new_meta, **{
             'cs_customer_token': self._logsense_token,
-            'cs_hostname': socket.gethostname(),
-            'cs_pattern_key': 'message'
+            'cs_hostname': socket.gethostname()
         }}
         return self._base_dict
 

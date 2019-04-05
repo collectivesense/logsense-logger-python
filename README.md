@@ -20,7 +20,9 @@ from os import getenv
 import logging
 
 logsense_token = getenv('LOGSENSE_TOKEN', None)
-logging.getLogger().addHandler(LogSenseHandler(logsense_token))
+log = logging.getLogger()
+log.addHandler(LogSenseHandler(logsense_token))
+log.setLevel(logging.INFO)
 
 
 class Example:
