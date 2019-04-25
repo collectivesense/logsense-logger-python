@@ -1,4 +1,4 @@
-from fluent.sender import FluentSender
+from fluent.sender import FluentSender, EventTime
 from os import getenv
 import logging
 import socket
@@ -73,12 +73,13 @@ class LogSenseSender:
             self._logger.emit('tag', {**converted_data, **self._base_dict})
 
     def emit_with_time(self, label, timestamp, data):
+        event_timestamp = EventTime(timestamp)
         if self._logger:
             if isinstance(data, dict):
                 converted_data = {key: self._convert_value_to_known_type(value) for key, value in data.items()}
             else:
                 converted_data = {'message': str(data)}
-            self._logger.emit_with_time(label, timestamp, {**converted_data, **self._base_dict})
+            self._logger.emit_with_time(label, event_timestamp, {**converted_data, **self._base_dict})
 
     @property
     def last_error(self):
