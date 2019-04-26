@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/logsense-logger.svg)](https://badge.fury.io/py/logsense-logger)
+
 # logsense-logger-python
 
 Provides a set of wrapper classes and method for working
